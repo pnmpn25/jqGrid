@@ -4003,7 +4003,7 @@ $.jgrid.extend({
 				var sdata={}, j=0, v, nm, sopt={},so;
 				$.each($t.p.colModel,function(){
 					var $elem = $("#gs_"+$.jgrid.jqID(this.name), (this.frozen===true && $t.p.frozenColumns === true) ?  $t.grid.fhDiv : $t.grid.hDiv);
-					nm = this.index || this.name;
+					nm = this.searchindex || this.index || this.name;
 					if(p.searchOperators ) {
 						so = $elem.parent().prev().children("a").attr("soper") || p.defaultSearch;
 					} else {
@@ -4060,7 +4060,7 @@ $.jgrid.extend({
 				$.each($t.p.colModel,function(){
 					var v, $elem = $("#gs_"+$.jgrid.jqID(this.name),(this.frozen===true && $t.p.frozenColumns === true) ?  $t.grid.fhDiv : $t.grid.hDiv);
 					if(this.searchoptions && this.searchoptions.defaultValue !== undefined) { v = this.searchoptions.defaultValue; }
-					nm = this.index || this.name;
+					nm = this.searchindex || this.index || this.name;
 					switch (this.stype) {
 						case 'select' :
 							$elem.find("option").each(function (i){
@@ -4252,7 +4252,7 @@ $.jgrid.extend({
 										$("td:eq(1)",stbl).append(res);
 									}
 									if(soptions.defaultValue !== undefined) { $("select",self).val(soptions.defaultValue); }
-									$("select",self).attr({name:cm.index || cm.name, id: "gs_"+cm.name});
+									$("select",self).attr({name:cm.searchindex || cm.index || cm.name, id: "gs_"+cm.name});
 									if(soptions.attr) {$("select",self).attr(soptions.attr);}
 									$("select",self).css({width: "100%"});
 									// preserve autoserch
@@ -4280,7 +4280,7 @@ $.jgrid.extend({
 							if (oSv) {	
 								var elem = document.createElement("select");
 								elem.style.width = "100%";
-								$(elem).attr({name:cm.index || cm.name, id: "gs_"+cm.name});
+								$(elem).attr({name:cm.searchindex || cm.index || cm.name, id: "gs_"+cm.name});
 								var sv, ov, key, k;
 								if(typeof oSv === "string") {
 									so = oSv.split(delim);
@@ -4316,7 +4316,7 @@ $.jgrid.extend({
 					case "text":
 						var df = soptions.defaultValue !== undefined ? soptions.defaultValue: "";
 
-						$("td:eq(1)",stbl).append("<input type='text' style='width:100%;padding:0px;' name='"+(cm.index || cm.name)+"' id='gs_"+cm.name+"' value='"+df+"'/>");
+						$("td:eq(1)",stbl).append("<input type='text' style='width:100%;padding:0px;' name='"+(cm.searchindex || cm.index || cm.name)+"' id='gs_"+cm.name+"' value='"+df+"'/>");
 						$(thd).append(stbl);
 
 						if(soptions.attr) {$("input",thd).attr(soptions.attr);}
@@ -4354,7 +4354,7 @@ $.jgrid.extend({
 						}
 						break;
 					case "custom":
-						$("td:eq(1)",stbl).append("<span style='width:95%;padding:0px;' name='"+(cm.index || cm.name)+"' id='gs_"+cm.name+"'/>");
+						$("td:eq(1)",stbl).append("<span style='width:95%;padding:0px;' name='"+(cm.searchindex || cm.index || cm.name)+"' id='gs_"+cm.name+"'/>");
 						$(thd).append(stbl);
 						try {
 							if($.isFunction(soptions.custom_element)) {
@@ -7227,7 +7227,7 @@ $.jgrid.extend({
 							ignoreHiding = (n.searchoptions && n.searchoptions.searchhidden === true);
 							if ((ignoreHiding && searchable) || (searchable && !hidden)) {
 								found = true;
-								colnm = n.index || n.name;
+								colnm = n.searchindex || n.index || n.name;
 								cmi =i;
 							}
 						}
@@ -7235,7 +7235,7 @@ $.jgrid.extend({
 				} else {
 					columns = p.columns;
 					cmi = 0;
-					colnm = columns[0].index || columns[0].name;
+					colnm = columns[0].searchindex || columns[0].index || columns[0].name;
 				}
 				// old behaviour
 				if( (!defaultFilters && colnm) || p.multipleSearch === false  ) {
